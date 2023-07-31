@@ -1,9 +1,9 @@
 body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-family: Helvetica,"Segoe UI", Tahoma, sans-serif;
   font-size: 75%;
   display: block;
   margin: 8px;
-  width: 300px;
+  width: 250px;
 }
 #top-block{
   margin-block-start: 0;
@@ -15,7 +15,7 @@ button{
    font-family: "Arial", "Segoe UI", Tahoma, sans-serif;
    background-color: forestgreen;
    border: none;
-   border-radius: 3px;
+   border-radius: 5px;
    padding: 8px;
    padding-left:20px;
    padding-right: 20px;
