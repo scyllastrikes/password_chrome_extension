@@ -34,7 +34,7 @@ saveBtn.addEventListener('click',()=>{
     const myListJSON = JSON.stringify(x);
     localStorage.setItem("Password", myListJSON)
    }
-  else {
+  else if (pwd.textContent!==storedList[storedList.length-1]){
     x.push(storedList)
     x.push(pwd.textContent)
     const myListJSON = JSON.stringify(x);
