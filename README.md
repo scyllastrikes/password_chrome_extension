@@ -1,4 +1,4 @@
-![Logo](URL)
+![Logo](https://github.com/scyllastrikes/password_chrome_extension/blob/main/icon.png)
 # password_chrome_extension
 To get started with this chromium extension you will need to :
 - [install](https://scribehow.com/shared/Download_password_extension_from_GitHub_repository__9Lx__v1XSYuOcrJ6ooYKtA) the project as zip 
