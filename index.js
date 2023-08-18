@@ -12,6 +12,8 @@ initDOM('selectedDomain','selected-domain')
 pwdI.value=12
 checkpwds()
 saveBtn.style.display="none"
+domainSelect.style.display="none"
+selectedDomain.style.display="none"
 pwdI.addEventListener('input', () => {
     const selectedValue = pwdI.value
     lenEl.textContent = `Password lenght: ${selectedValue}`
@@ -84,6 +86,8 @@ function isLocalStorageEmpty() {
 }*/
 displayBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "none")
+  domainSelect.style.display="block"
+selectedDomain.style.display="block"
 // Populate the select element with localStorage keys
 for (let i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i)
@@ -97,7 +101,9 @@ for (let i = 0; i < localStorage.length; i++) {
 domainSelect.addEventListener("change", function() {
   const selectedKey = domainSelect.value
   const selectedStoredValue = localStorage.getItem(selectedKey);
-  selectedDomain.textContent = `passwords for key '${selectedKey}': ${selectedStoredValue}`
+  selectedDomain.textContent = `passwords for ${selectedKey} are :
+  
+                                      ${selectedStoredValue}`
 })
  })
 function initDOM(varName, elementId) {
