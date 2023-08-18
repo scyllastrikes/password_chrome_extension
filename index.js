@@ -36,6 +36,7 @@ pwdBtn.addEventListener('click', function(){
 })
 saveBtn.addEventListener('click',()=>{
   checkpwds()
+  let x =[]
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     let urlA =tabs[0].url
     let url = extractMainPart(urlA)
@@ -44,14 +45,15 @@ saveBtn.addEventListener('click',()=>{
 
   if(pwd.textContent!==""){
   if ( pwdList === null) {
-    
+    x.push(pwd.textContent)
+    const myListJSON = JSON.stringify(x)
     localStorage.setItem(url, myListJSON)
    }
 
   else if (pwd.textContent!==storedList[storedList.length-1]){
     x.push(storedList)
     x.push(pwd.textContent)
-    const myListJSON = JSON.stringify(x);
+    const myListJSON = JSON.stringify(x)
     localStorage.setItem(url, myListJSON)
   }}})}) 
 
