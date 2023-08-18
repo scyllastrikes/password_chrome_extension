@@ -1,10 +1,14 @@
-const pwdBtn = document.getElementById("pwd-btn")
-const passwordEl =document.getElementById("password-el")
-const pwdI= document.getElementById("pwd-i")
-const lenEl=document.getElementById("len-el")
-const pwd= document.getElementById("pwd")
-const saveBtn=document.getElementById("save-btn")
-const displayBtn=document.getElementById("display-btn")
+initDOM('pwdBtn','pwd-btn')
+initDOM('passwordEl','password-el')
+initDOM('pwdI','pwd-i')
+initDOM('lenEl','len-el')
+initDOM('pwd','pwd')
+initDOM('saveBtn','save-btn')
+initDOM('displayBtn','display-btn')
+initDOM('lenInfo', 'len-info')
+initDOM('domainSelect','domain-select')
+initDOM('selectedDomain','selected-domain')
+
 pwdI.value=12
 checkpwds()
 saveBtn.style.display="none"
@@ -23,15 +27,14 @@ pwdBtn.addEventListener('click', function(){
 
   for (let i = 0; i < pwdI.value; i++) {
     const randomIndex = Math.floor(Math.random() * chars.length);
-    password += chars.charAt(randomIndex)
-  }
-
+    password += chars.charAt(randomIndex)}
   pwd.textContent=password
 })
 saveBtn.addEventListener('click',()=>{
   checkpwds()
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    let url =tabs[0].url
+    let urlA =tabs[0].url
+    let url = extractMainPart(urlA)
   const pwdList = localStorage.getItem(url)
   const storedList = JSON.parse(pwdList)
   let x=[]
@@ -53,16 +56,52 @@ saveBtn.addEventListener('click',()=>{
 
 function checkpwds(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    let url =tabs[0].url
+    let urlA =tabs[0].url
+    let url = extractMainPart(urlA)
   const pwdList = localStorage.getItem(url)
-  if ( pwdList !== null) {
-    displayBtn.style.display="block"
-   }
-  else{
-    displayBtn.style.display="none"
-  }
+  if ( pwdList !== null) {displayBtn.style.display="block"}
+  else{displayBtn.style.display="none"}
 })}
 
+
+function extractMainPart(url) {
+  let parsedURL = new URL(url)
+  let mainPart = parsedURL.origin
+  return mainPart
+}
  
 
 //.addEventListener('click',()=>{
+  
+/*
+function isLocalStorageEmpty() {
+  for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.key(i)) {
+        return false
+      }
+  }
+  return true 
+}*/
+displayBtn.addEventListener('click',()=>{
+  [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "none")
+// Populate the select element with localStorage keys
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i)
+  const option = document.createElement("option")
+  option.value = key
+  option.text = key
+  domainSelect.appendChild(option)
+}
+
+// Update the selected value display when an option is selected
+domainSelect.addEventListener("change", function() {
+  const selectedKey = domainSelect.value
+  const selectedStoredValue = localStorage.getItem(selectedKey);
+  selectedDomain.textContent = `passwords for key '${selectedKey}': ${selectedStoredValue}`
+})
+ })
+function initDOM(varName, elementId) {
+  window[varName] = document.getElementById(elementId);
+}
+
+
