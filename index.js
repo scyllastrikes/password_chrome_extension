@@ -9,9 +9,11 @@ initDOM('lenInfo', 'len-info')
 initDOM('domainSelect','domain-select')
 initDOM('selectedDomain','selected-domain')
 initDOM('DSLabel','domain-select-label')
+initDOM('x','x')
 
 pwdI.value=12
 checkpwds()
+x.style.display="none"
 saveBtn.style.display="none"
 domainSelect.style.display="none"
 selectedDomain.style.display="none"
@@ -77,8 +79,12 @@ function extractMainPart(url) {
 displayBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "none")
   domainSelect.style.display="block"
- selectedDomain.style.display="block"
- DSLabel.style.display="block"
+  selectedDomain.style.display="block"
+  DSLabel.style.display="block"
+  x.style.display="block"
+  while (domainSelect.options.length > 1) { 
+    domainSelect.remove(1)
+  }
 // Populate the select element with localStorage keys
 for (let i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i)
@@ -100,5 +106,11 @@ domainSelect.addEventListener("change", function() {
 function initDOM(varName, elementId) {
   window[varName] = document.getElementById(elementId);
 }
-
+x.addEventListener('click',()=>{
+  [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "block")
+  domainSelect.style.display="none"
+  selectedDomain.style.display="none"
+  DSLabel.style.display="none"
+  x.style.display="none"
+})
 
