@@ -10,9 +10,8 @@ initDOM('domainSelect','domain-select')
 initDOM('selectedDomain','selected-domain')
 initDOM('DSLabel','domain-select-label')
 initDOM('x','x')
-
+check()
 pwdI.value=12
-checkpwds()
 x.style.display="none"
 saveBtn.style.display="none"
 domainSelect.style.display="none"
@@ -25,7 +24,6 @@ pwdI.addEventListener('input', () => {
   })
 
 pwdBtn.addEventListener('click', function(){
-  checkpwds()
   saveBtn.style.display="block"
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
   let password = ''
@@ -37,37 +35,18 @@ pwdBtn.addEventListener('click', function(){
   pwd.textContent=password
 })
 saveBtn.addEventListener('click',()=>{
-  checkpwds()
-  let x =[]
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     let urlA =tabs[0].url
     let url = extractMainPart(urlA)
   const pwdList = localStorage.getItem(url)
-
-
-  if(pwd.textContent!==""){
-  if ( pwdList === null) {
-    x.push(pwd.textContent)
-    const myListJSON = JSON.stringify(x)
-    localStorage.setItem(url, myListJSON)
-   }
-
-  else if (pwd.textContent!==storedList[storedList.length-1]){
-    x.push(storedList)
-    x.push(pwd.textContent)
-    const myListJSON = JSON.stringify(x)
-    localStorage.setItem(url, myListJSON)
-  }}})}) 
-
-
-function checkpwds(){
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-    let urlA =tabs[0].url
-    let url = extractMainPart(urlA)
-  const pwdList = localStorage.getItem(url)
-  if ( pwdList !== null) {displayBtn.style.display="block"}
-  else{displayBtn.style.display="none"}
-})}
+  if ( pwdList === null || pwd.textContent===pwdList) {localStorage.setItem(url, pwd.textContent)}
+  else{
+    alert("you will overwrite the password")
+    localStorage.setItem(url, pwd.textContent)
+  }})
+  saveBtn.style.display="none"
+  check()
+  }) 
 
 
 function extractMainPart(url) {
@@ -97,10 +76,14 @@ for (let i = 0; i < localStorage.length; i++) {
 // Update the selected value display when an option is selected
 domainSelect.addEventListener("change", function() {
   const selectedKey = domainSelect.value
-  const selectedStoredValue = localStorage.getItem(selectedKey);
+  const selectedStoredValue = localStorage.getItem(selectedKey)
+  if (selectedStoredValue ===null){ 
+    selectedDomain.textContent ="Selected value will appear here."
+  }
+  else{ 
   selectedDomain.textContent = `the password for ${selectedKey} is :
   
-                                      ${selectedStoredValue}`
+                                      ${selectedStoredValue}`}
 })
  })
 function initDOM(varName, elementId) {
@@ -114,3 +97,7 @@ x.addEventListener('click',()=>{
   x.style.display="none"
 })
 
+function check(){
+  if(localStorage.length===0){displayBtn.style.display="none"}
+  else{displayBtn.style.display="block"}
+}
