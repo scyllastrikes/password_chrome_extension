@@ -11,17 +11,18 @@
     <hr>
     <p id="password-el">Generate, save, and display passwords and their associated domains with just three buttons.</p>
     <button id="pwd-btn">Generate password</button>
-    <button id="save-btn">SAVE password</button>
-    <button id="display-btn">display passwords</button>
     <p id="pwd"></p>
 
     <div class="top-block">
      <p id="len-el">Password length: 12</p>
      <p id="len-info">Adjust the slider for the required password length</p>
      <input id="pwd-i" type="range" name="password lenght" min="8" max="20" step="1">
-
+     <button id="save-btn">SAVE password</button>
+     <button id="display-btn">display passwords</button>
+     <button id="generator-btn">generator options</button>
+     <button id="x">X</button>
      <div class="bottom-block">
-        <button id="x">X</button>
+        
          <label id="domain-select-label" for="domain-select">Select a domain:</label>
          <select id="domain-select">
             <option>select an option</option>
@@ -29,10 +30,20 @@
          <p id="selected-domain">Selected value will appear here.</p>
      </div>
 
+     <div class="gen-options">
+        <label id="generator-select-label" for="generate-select">Select a password generation method :</label>
+         <select id="generate-select">
+            <option>select an option</option>
+            <option value="c">only Characters</option>
+            <option value="n">only Numbers</option>
+            <option value="cn">Characters & Numbers</option>
+            <option value="cns">Characters, Numbers & Symbols</option>
+         </select>
+     </div>
+
     <hr>
     <p id="info">Created by <a target="blank" href="https://github.com/scyllastrikes">Scylla</a>.</p>
     </div> 
-
     <script src="index.js" type="module" ></script>
 </body>
 </html>
