@@ -1,5 +1,5 @@
 body {
-  font-family: Helvetica,"Segoe UI", Tahoma, sans-serif;
+  font-family: system-ui, sans-serif;
   font-size: 75%;
   display: block;
   margin: 8px;
@@ -60,4 +60,26 @@ p{
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+}
+select {
+  padding: 10px 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: forestgreen;
+  color: white;
+  box-shadow: 0px 1px 4px 0px rgb(0 0 0 / 20%);
+}
+#x {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  padding: 5px ;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  width: 10%;
+  border-radius: 50%;
+  background-color: red;
+  color: black;
 }
