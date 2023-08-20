@@ -31,7 +31,7 @@ pwdI.addEventListener('input', () => {
 pwdBtn.addEventListener('click', function(){
   saveBtn.style.display="block"
   let chars=""
-  const genID = generateSelect.value
+  const genID = localStorage.getItem("genarg")
   switch (genID) {
     case "c":
       chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -45,6 +45,9 @@ pwdBtn.addEventListener('click', function(){
     case "cns":
       chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?'
         break;
+    /*case"custom":
+      chars ='custominput'
+    */
     default:
       chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?'
       break;
@@ -83,6 +86,7 @@ displayBtn.addEventListener('click',()=>{
   selectedDomain.style.display="block"
   DSLabel.style.display="block"
   x.style.display="block"
+  //if the value of chararg is not null display that value by knowing what key is stored under it 
   while (domainSelect.options.length > 1) { 
     domainSelect.remove(1)
   }
@@ -92,7 +96,7 @@ for (let i = 0; i < localStorage.length; i++) {
   const option = document.createElement("option")
   option.value = key
   option.text = key
-  domainSelect.appendChild(option)
+  if (option.text!=="genarg"){domainSelect.appendChild(option)}
 }
 
 // Update the selected value display when an option is selected
@@ -129,8 +133,9 @@ genBtn.addEventListener('click',()=>{
   x.style.display="block"
   generateSelect.style.display="block"
 })
-/*
 generateSelect.addEventListener('change',()=>{
- if switch value = custom , make a input elem appear to get the customised charlist
-  
-})*/
+    localStorage.setItem("genarg",generateSelect.value)
+    if (generateSelect.value==="custom"){
+      // make a input elem appear to get the customised charlist      
+    }
+})
