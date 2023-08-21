@@ -13,8 +13,28 @@ initDOM('x','x')
 initDOM('genBtn','generator-btn')
 initDOM('generateSelect','generate-select')
 initDOM('GSLabel','generator-select-label')
+initDOM('moreBtn','more-btn')
+initDOM('lessBtn','less-btn')
 check()
 pwdI.value=12
+saveBtn.style.display="none"
+displayBtn.style.display="none"
+genBtn.style.display="none"
+lessBtn.style.display="none"
+function showmore(){
+  
+}
+moreBtn.addEventListener('click',()=>{
+  [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
+  moreBtn.style.display="none"
+})
+lessBtn.addEventListener('click',()=>{
+  [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "none")
+  moreBtn.style.display="block"
+})
+lenEl.style.display="none"
+lenInfo.style.display="none"
+pwdI.style.display="none"
 x.style.display="none"
 saveBtn.style.display="none"
 domainSelect.style.display="none"
@@ -70,7 +90,6 @@ if (userChoice) {localStorage.setItem(url, pwd.textContent)}
 
   }})
   saveBtn.style.display="none"
-  check()
   }) 
 
 
@@ -81,7 +100,7 @@ function extractMainPart(url) {
 }
 
 displayBtn.addEventListener('click',()=>{
-  [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn, genBtn].forEach(el => el.style.display = "none")
+  [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn, genBtn,lessBtn,moreBtn].forEach(el => el.style.display = "none")
   domainSelect.style.display="block"
   selectedDomain.style.display="block"
   DSLabel.style.display="block"
@@ -116,12 +135,20 @@ function initDOM(varName, elementId) {
   window[varName] = document.getElementById(elementId);
 }
 x.addEventListener('click',()=>{
-  [pwdBtn,pwd, genBtn, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "block")
+  [pwdBtn,pwd, GSLabel,  passwordEl,  moreBtn].forEach(el => el.style.display = "block")
+  lessBtn.style.display="none"
   domainSelect.style.display="none"
   selectedDomain.style.display="none"
   DSLabel.style.display="none"
   x.style.display="none"
   generateSelect.style.display="none"
+  lenEl.style.display="none"
+  lenInfo.style.display="none"
+  pwdI.style.display="none"
+  GSLabel.style.display="none"
+  saveBtn.style.display="none"
+  displayBtn.style.display="none"
+  genBtn.style.display="none"
 })
 
 function check(){
@@ -129,9 +156,13 @@ function check(){
   else{displayBtn.style.display="block"}
 }
 genBtn.addEventListener('click',()=>{
-  [pwdBtn,pwd, passwordEl, genBtn, saveBtn, lenEl, lenInfo, pwdI, displayBtn].forEach(el => el.style.display = "none")
+  [pwdBtn,pwd, passwordEl, genBtn, saveBtn, lenEl, lenInfo, pwdI, displayBtn,moreBtn,lessBtn].forEach(el => el.style.display = "none")
   x.style.display="block"
+  GSLabel.style.display="block"
   generateSelect.style.display="block"
+  lenEl.style.display="block"
+  lenInfo.style.display="block"
+  pwdI.style.display="block"
 })
 generateSelect.addEventListener('change',()=>{
     localStorage.setItem("genarg",generateSelect.value)
