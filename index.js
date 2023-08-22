@@ -1,8 +1,5 @@
-function initDOMList(varNames, elementIds) {
-  for (let i = 0; i < varNames.length; i++) {
-    window[varNames[i]] = document.getElementById(elementIds[i]);
-  }
-}
+
+//declarations and func calls
 let variableNames = ['pwdBtn','passwordEl','pwdI','lenEl','pwd','saveBtn','displayBtn','lenInfo', 'domainSelect','selectedDomain','DSLabel','x','genBtn','generateSelect','GSLabel','moreBtn','lessBtn']
 let elementIds = ['pwd-btn','password-el','pwd-i','len-el','pwd','save-btn','display-btn' ,'len-info','domain-select','selected-domain','domain-select-label','x','generator-btn','generate-select','generator-select-label','more-btn','less-btn']
 initDOMList(variableNames, elementIds)
@@ -10,22 +7,8 @@ check()
 pwdI.value=12
 let items=[saveBtn,displayBtn,genBtn,lessBtn,lenEl,lenInfo,pwdI,x,domainSelect,selectedDomain,DSLabel,generateSelect,GSLabel]
 items.forEach(el => el.style.display = "none")
-function state(){
-  let state = localStorage.getItem("optionarg")
-  console.log(state)
-  if (state===null || state==="-"){
-    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "none")
-    moreBtn.style.display="block" 
-  }
-  else {
-    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
-    moreBtn.style.display="none"
-  }
-  let pwdd = localStorage.getItem("passwordarg")
-  if (pwdd===null){pwd.textContent="click on the green button"}
-  else{pwd.textContent=pwdd}
-}
 state()
+//eventlisteners
 
 moreBtn.addEventListener('click', ()=>{
   [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
@@ -87,13 +70,7 @@ if (userChoice) {localStorage.setItem(url, pwd.textContent)}
   }})
   }) 
 
-
-function extractMainPart(url) {
-  let parsedURL = new URL(url)
-  let mainPart = parsedURL.origin
-  return mainPart
-}
-
+  
 displayBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn, genBtn,lessBtn,moreBtn].forEach(el => el.style.display = "none")
   let items=[domainSelect,selectedDomain,DSLabel,x]
@@ -132,10 +109,6 @@ x.addEventListener('click',()=>{
   state()
 })
 
-function check(){
-  if(localStorage.length===0){displayBtn.style.display="none"}
-  else{displayBtn.style.display="block"}
-}
 genBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, genBtn, saveBtn, lenEl, lenInfo, pwdI, displayBtn,moreBtn,lessBtn].forEach(el => el.style.display = "none")
   let items=[lenEl,lenInfo,pwdI,x,generateSelect,GSLabel]
@@ -148,3 +121,39 @@ generateSelect.addEventListener('change',()=>{
     }
 })
 
+
+//functions
+function initDOMList(varNames, elementIds) {
+  for (let i = 0; i < varNames.length; i++) {
+    window[varNames[i]] = document.getElementById(elementIds[i]);
+  }
+}
+
+function state(){
+  let state = localStorage.getItem("optionarg")
+  console.log(state)
+  if (state===null || state==="-"){
+    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "none")
+    moreBtn.style.display="block" 
+  }
+  else {
+    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
+    moreBtn.style.display="none"
+  }
+  let pwdd = localStorage.getItem("passwordarg")
+  if (pwdd===null){pwd.textContent="click on the green button"}
+  else{pwd.textContent=pwdd}
+}
+
+
+function extractMainPart(url) {
+  let parsedURL = new URL(url)
+  let mainPart = parsedURL.origin
+  return mainPart
+}
+
+
+function check(){
+  if(localStorage.length===0){displayBtn.style.display="none"}
+  else{displayBtn.style.display="block"}
+}
