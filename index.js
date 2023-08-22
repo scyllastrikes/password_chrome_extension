@@ -1,47 +1,43 @@
-initDOM('pwdBtn','pwd-btn')
-initDOM('passwordEl','password-el')
-initDOM('pwdI','pwd-i')
-initDOM('lenEl','len-el')
-initDOM('pwd','pwd')
-initDOM('saveBtn','save-btn')
-initDOM('displayBtn','display-btn')
-initDOM('lenInfo', 'len-info')
-initDOM('domainSelect','domain-select')
-initDOM('selectedDomain','selected-domain')
-initDOM('DSLabel','domain-select-label')
-initDOM('x','x')
-initDOM('genBtn','generator-btn')
-initDOM('generateSelect','generate-select')
-initDOM('GSLabel','generator-select-label')
-initDOM('moreBtn','more-btn')
-initDOM('lessBtn','less-btn')
+function initDOMList(varNames, elementIds) {
+  for (let i = 0; i < varNames.length; i++) {
+    window[varNames[i]] = document.getElementById(elementIds[i]);
+  }
+}
+let variableNames = ['pwdBtn','passwordEl','pwdI','lenEl','pwd','saveBtn','displayBtn','lenInfo', 'domainSelect','selectedDomain','DSLabel','x','genBtn','generateSelect','GSLabel','moreBtn','lessBtn']
+let elementIds = ['pwd-btn','password-el','pwd-i','len-el','pwd','save-btn','display-btn' ,'len-info','domain-select','selected-domain','domain-select-label','x','generator-btn','generate-select','generator-select-label','more-btn','less-btn']
+initDOMList(variableNames, elementIds)
 check()
 pwdI.value=12
-saveBtn.style.display="none"
-displayBtn.style.display="none"
-genBtn.style.display="none"
-lessBtn.style.display="none"
-function showmore(){
-  
+let items=[saveBtn,displayBtn,genBtn,lessBtn,lenEl,lenInfo,pwdI,x,domainSelect,selectedDomain,DSLabel,generateSelect,GSLabel]
+items.forEach(el => el.style.display = "none")
+function state(){
+  let state = localStorage.getItem("optionarg")
+  console.log(state)
+  if (state===null || state==="-"){
+    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "none")
+    moreBtn.style.display="block" 
+  }
+  else {
+    [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
+    moreBtn.style.display="none"
+  }
+  let pwdd = localStorage.getItem("passwordarg")
+  if (pwdd===null){pwd.textContent="click on the green button"}
+  else{pwd.textContent=pwdd}
 }
-moreBtn.addEventListener('click',()=>{
+state()
+
+moreBtn.addEventListener('click', ()=>{
   [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "block")
   moreBtn.style.display="none"
+  localStorage.setItem("optionarg","+")
 })
 lessBtn.addEventListener('click',()=>{
   [saveBtn, displayBtn , genBtn, lessBtn].forEach(el => el.style.display = "none")
   moreBtn.style.display="block"
+  localStorage.setItem("optionarg","-")
 })
-lenEl.style.display="none"
-lenInfo.style.display="none"
-pwdI.style.display="none"
-x.style.display="none"
-saveBtn.style.display="none"
-domainSelect.style.display="none"
-selectedDomain.style.display="none"
-DSLabel.style.display="none"
-generateSelect.style.display="none"
-GSLabel.style.display="none"
+
 pwdI.addEventListener('input', () => {
     const selectedValue = pwdI.value
     lenEl.textContent = `Password lenght: ${selectedValue}`
@@ -49,7 +45,6 @@ pwdI.addEventListener('input', () => {
   })
   
 pwdBtn.addEventListener('click', function(){
-  saveBtn.style.display="block"
   let chars=""
   const genID = localStorage.getItem("genarg")
   switch (genID) {
@@ -77,6 +72,7 @@ pwdBtn.addEventListener('click', function(){
     const randomIndex = Math.floor(Math.random() * chars.length);
     password += chars.charAt(randomIndex)}
   pwd.textContent=password
+  localStorage.setItem("passwordarg",password)
 })
 saveBtn.addEventListener('click',()=>{
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
@@ -89,7 +85,6 @@ saveBtn.addEventListener('click',()=>{
 if (userChoice) {localStorage.setItem(url, pwd.textContent)}
 
   }})
-  saveBtn.style.display="none"
   }) 
 
 
@@ -101,21 +96,18 @@ function extractMainPart(url) {
 
 displayBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, saveBtn, lenEl, lenInfo, pwdI, displayBtn, genBtn,lessBtn,moreBtn].forEach(el => el.style.display = "none")
-  domainSelect.style.display="block"
-  selectedDomain.style.display="block"
-  DSLabel.style.display="block"
-  x.style.display="block"
-  //if the value of chararg is not null display that value by knowing what key is stored under it 
+  let items=[domainSelect,selectedDomain,DSLabel,x]
+  items.forEach(el => el.style.display = "block")
   while (domainSelect.options.length > 1) { 
     domainSelect.remove(1)
   }
-// Populate the select element with localStorage keys
+
 for (let i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i)
   const option = document.createElement("option")
   option.value = key
   option.text = key
-  if (option.text!=="genarg"){domainSelect.appendChild(option)}
+  if (option.text!=="genarg"&&option.text!=="optionarg"&&option.text!=="passwordarg"){domainSelect.appendChild(option)}
 }
 
 // Update the selected value display when an option is selected
@@ -131,24 +123,13 @@ domainSelect.addEventListener("change", function() {
                                       ${selectedStoredValue}`}
 })
  })
-function initDOM(varName, elementId) {
-  window[varName] = document.getElementById(elementId);
-}
+
 x.addEventListener('click',()=>{
   [pwdBtn,pwd, GSLabel,  passwordEl,  moreBtn].forEach(el => el.style.display = "block")
-  lessBtn.style.display="none"
-  domainSelect.style.display="none"
-  selectedDomain.style.display="none"
-  DSLabel.style.display="none"
-  x.style.display="none"
-  generateSelect.style.display="none"
-  lenEl.style.display="none"
-  lenInfo.style.display="none"
-  pwdI.style.display="none"
-  GSLabel.style.display="none"
-  saveBtn.style.display="none"
-  displayBtn.style.display="none"
-  genBtn.style.display="none"
+  let items=[displayBtn,genBtn,lessBtn,lenEl,lenInfo,pwdI,x,domainSelect,selectedDomain,DSLabel,generateSelect,GSLabel]
+  items.forEach(el => el.style.display = "none")
+  saveBtn.style.display="block"
+  state()
 })
 
 function check(){
@@ -157,12 +138,8 @@ function check(){
 }
 genBtn.addEventListener('click',()=>{
   [pwdBtn,pwd, passwordEl, genBtn, saveBtn, lenEl, lenInfo, pwdI, displayBtn,moreBtn,lessBtn].forEach(el => el.style.display = "none")
-  x.style.display="block"
-  GSLabel.style.display="block"
-  generateSelect.style.display="block"
-  lenEl.style.display="block"
-  lenInfo.style.display="block"
-  pwdI.style.display="block"
+  let items=[lenEl,lenInfo,pwdI,x,generateSelect,GSLabel]
+  items.forEach(el => el.style.display = "block")
 })
 generateSelect.addEventListener('change',()=>{
     localStorage.setItem("genarg",generateSelect.value)
@@ -170,3 +147,4 @@ generateSelect.addEventListener('change',()=>{
       // make a input elem appear to get the customised charlist      
     }
 })
+
