@@ -50,19 +50,47 @@ pwdBtn.addEventListener('click', function(){
       chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?'
       break;
     }
+  
   let password = ''
   for (let i = 0; i < pwdI.value; i++) {
     const randomIndex = Math.floor(Math.random() * chars.length);
     password += chars.charAt(randomIndex)}
-  pwd.textContent=password
   localStorage.setItem("passwordarg",password)
+  pwd.dataset.value = password
+  const letters = chars
+  let interval = null;
+
+
+  let iteration = 0;
+  
+  clearInterval(interval);
+  
+  interval = setInterval(() => {
+    pwd.innerText = pwd.innerText
+      .split("")
+      .map((letter, index) => {
+        if(index < iteration) {
+          return pwd.dataset.value[index];
+        }
+      
+        return letters[Math.floor(Math.random() * 26)]
+      })
+      .join("");
+    
+    if(iteration >= pwd.dataset.value.length){ 
+      clearInterval(interval);
+    }
+    
+    iteration += 1 / 3;
+  }, 30);
 })
 saveBtn.addEventListener('click',()=>{
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     let urlA =tabs[0].url
     let url = extractMainPart(urlA)
   const pwdList = localStorage.getItem(url)
-  if ( pwdList === null || pwd.textContent===pwdList) {localStorage.setItem(url, pwd.textContent)}
+  if ( pwdList === null  ) {localStorage.setItem(url, pwd.textContent)}
+  else if (pwd.textContent===pwdList){alert("The password is already saved.")}
   else{
     const userChoice = confirm("The current password will be overwritten if you proceed.");
 if (userChoice) {localStorage.setItem(url, pwd.textContent)}

@@ -54,13 +54,14 @@ p{
   font-size: 16px;
   font-weight: bold;
 }
+/*
 #pwd{
   margin-top: 10px;
   color: black;
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-}
+}*/
 select {
   padding: 10px 10px;
   font-size: 16px;
@@ -82,4 +83,14 @@ select {
   border-radius: 50%;
   background-color: red;
   color: black;
+}
+#pwd {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  color: black;
+  padding: 0rem clamp(1rem, 2vw, 3rem);
+  border-radius: clamp(0.4rem, 0.75vw, 1rem);
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
