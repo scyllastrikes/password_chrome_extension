@@ -10,4 +10,4 @@ To get started with this chromium extension you will need to :
 #
 and now simply enjoy a password generator 
 
-P.S: on every update i make to the repository it is necessairy for you do re-download the repo as a zip to get the latest features (passwords sorted by domains is currently in the works)
+P.S: on every update i make to the repository it is necessairy for you do re-download the repo as a zip to get the latest features (project will have a css update soon)
