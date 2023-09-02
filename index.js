@@ -55,13 +55,14 @@ pwdBtn.addEventListener('click', function(){
   for (let i = 0; i < pwdI.value; i++) {
     const randomIndex = Math.floor(Math.random() * chars.length);
     password += chars.charAt(randomIndex)}
+  if (localStorage.getItem("passwordarg")===null){pwd.textContent=password}
   localStorage.setItem("passwordarg",password)
   pwd.dataset.value = password
+  pwd.innerText = "XXXXXXXXxxx"
   const letters = chars
-  let interval = null;
+  let interval = null
 
-
-  let iteration = 0;
+  let iteration = 0
   
   clearInterval(interval);
   
